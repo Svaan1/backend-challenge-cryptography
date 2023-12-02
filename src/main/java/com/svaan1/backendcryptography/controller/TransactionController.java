@@ -4,7 +4,6 @@ import com.svaan1.backendcryptography.dto.TransactionDTO;
 import com.svaan1.backendcryptography.dto.TransactionResponseDTO;
 import com.svaan1.backendcryptography.service.TransactionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +37,7 @@ public class TransactionController {
 
     @DeleteMapping(value = "/{id}")
     public void deleteTransaction(@PathVariable("id") Long transactionId) {
-
+        transactionService.deleteTransaction(transactionId);
     }
 
 }

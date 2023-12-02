@@ -29,7 +29,10 @@ public class TransactionService {
         Transaction transaction = convertDTOtoEntity(transactionDTO);
 
         transactionRepository.save(transaction);
+    }
 
+    public void deleteTransaction(Long transactionId) {
+        transactionRepository.deleteById(transactionId);
     }
 
     public Transaction convertDTOtoEntity(TransactionDTO transactionDTO) {
