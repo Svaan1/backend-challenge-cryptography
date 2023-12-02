@@ -22,8 +22,8 @@ public class TransactionController {
     }
 
     @GetMapping(value = "/{transactionId}")
-    public void getTransaction(@PathVariable Long transactionId) {
-
+    public TransactionResponseDTO getTransaction(@PathVariable Long transactionId) {
+        return transactionService.getTransaction(transactionId);
     }
 
     @PostMapping
