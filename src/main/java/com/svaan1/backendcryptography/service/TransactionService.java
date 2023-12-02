@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,22 @@ public class TransactionService {
         Transaction transaction = convertDTOtoEntity(transactionDTO);
 
         transactionRepository.save(transaction);
+    }
+
+    public void updateTransaction(Long transactionId, TransactionDTO transactionDTO) {
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
+
+        if (optionalTransaction.isPresent()) {
+            Transaction transaction = optionalTransaction.get();
+
+            transaction.setUserDocument(transactionDTO.getUserDocument());
+            transaction.setCreditCardToken(transactionDTO.getCreditCardToken());
+            transaction.setValue(transactionDTO.getValue());
+
+            transactionRepository.save(transaction);
+        } else {
+            createTransaction(transactionDTO);
+        }
     }
 
     public void deleteTransaction(Long transactionId) {

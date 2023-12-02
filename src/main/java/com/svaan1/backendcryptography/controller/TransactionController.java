@@ -32,11 +32,11 @@ public class TransactionController {
 
     @PutMapping(value = "/{transactionId}")
     public void updateTransaction(@PathVariable Long transactionId, @RequestBody TransactionDTO transactionDTO) {
-
+        transactionService.updateTransaction(transactionId, transactionDTO);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteTransaction(@PathVariable("id") Long transactionId) {
+    @DeleteMapping(value = "/{transactionId}")
+    public void deleteTransaction(@PathVariable Long transactionId) {
         transactionService.deleteTransaction(transactionId);
     }
 
