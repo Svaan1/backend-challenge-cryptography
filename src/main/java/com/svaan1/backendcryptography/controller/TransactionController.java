@@ -1,16 +1,24 @@
 package com.svaan1.backendcryptography.controller;
 
 import com.svaan1.backendcryptography.dto.TransactionDTO;
+import com.svaan1.backendcryptography.dto.TransactionResponseDTO;
+import com.svaan1.backendcryptography.service.TransactionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/transactions")
+@RequiredArgsConstructor
 public class TransactionController {
 
-    @GetMapping
-    public void listTransactions() {
+    private final TransactionService transactionService;
 
+    @GetMapping
+    public List<TransactionResponseDTO> listTransactions() {
+        return transactionService.listTransactions();
     }
 
     @GetMapping(value = "/{transactionId}")
