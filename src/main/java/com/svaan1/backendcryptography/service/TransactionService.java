@@ -17,4 +17,12 @@ public class TransactionService {
     public List<TransactionResponseDTO> listTransactions() {
         return transactionRepository.findAll().stream().map(Transaction::toResponse).toList();
     }
+
+    public TransactionResponseDTO getTransaction(Long transactionId) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
+
+        return transaction.toResponse();
+    }
+
+
 }
