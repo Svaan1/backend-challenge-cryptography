@@ -1,5 +1,6 @@
 package com.svaan1.backendcryptography.model;
 
+import com.svaan1.backendcryptography.dto.TransactionResponseDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,5 +16,14 @@ public class Transaction {
     private String userDocument;
     private String creditCardToken;
     private Long value;
+
+    public TransactionResponseDTO toResponse() {
+        return TransactionResponseDTO.builder()
+                .id(id)
+                .userDocument(userDocument)
+                .creditCardToken(creditCardToken)
+                .value(value)
+                .build();
+    }
 
 }
