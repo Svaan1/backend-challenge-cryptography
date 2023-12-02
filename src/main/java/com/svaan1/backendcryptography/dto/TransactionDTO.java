@@ -1,6 +1,5 @@
 package com.svaan1.backendcryptography.dto;
 
-import com.svaan1.backendcryptography.model.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,11 +14,4 @@ public class TransactionDTO {
     private String creditCardToken;
     private Long value;
 
-    public Transaction toEntity() {
-        return Transaction.builder()
-                .userDocument(userDocument)
-                .creditCardToken(creditCardToken)
-                .value(value)
-                .build();
-    }
 }
