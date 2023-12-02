@@ -28,7 +28,7 @@ public class TransactionController {
 
     @PostMapping
     public void createTransaction(@RequestBody TransactionDTO transactionDTO) {
-
+        transactionService.createTransaction(transactionDTO);
     }
 
     @PutMapping(value = "/{transactionId}")
