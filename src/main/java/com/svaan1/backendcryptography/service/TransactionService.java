@@ -32,7 +32,7 @@ public class TransactionService {
 
     }
 
-    public Transaction convertDTOtoEntity(TransactionDTO transactionDTO) {
+    private Transaction convertDTOtoEntity(TransactionDTO transactionDTO) {
         return Transaction.builder()
                 .userDocument(transactionDTO.getUserDocument())
                 .creditCardToken(transactionDTO.getCreditCardToken())
@@ -40,7 +40,7 @@ public class TransactionService {
                 .build();
     }
 
-    public TransactionResponseDTO convertEntityToResponse(Transaction transaction) {
+    private TransactionResponseDTO convertEntityToResponse(Transaction transaction) {
         return TransactionResponseDTO.builder()
                 .id(transaction.getId())
                 .userDocument(transaction.getUserDocument())
