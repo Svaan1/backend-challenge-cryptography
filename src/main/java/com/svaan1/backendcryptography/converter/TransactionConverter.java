@@ -10,7 +10,7 @@ public class TransactionConverter {
         return TransactionResponseDTO.builder()
                 .id(transaction.getId())
                 .userDocument(transaction.getUserDocument())
-                .creditCardToken(transaction.getUserDocument())
+                .creditCardToken(transaction.getCreditCardToken())
                 .value(transaction.getValue())
                 .build();
     }
@@ -18,7 +18,7 @@ public class TransactionConverter {
     public Transaction toEntity(TransactionDTO transactionDTO) {
         return Transaction.builder()
                 .userDocument(transactionDTO.getUserDocument())
-                .creditCardToken(transactionDTO.getUserDocument())
+                .creditCardToken(transactionDTO.getCreditCardToken())
                 .value(transactionDTO.getValue())
                 .build();
     }
