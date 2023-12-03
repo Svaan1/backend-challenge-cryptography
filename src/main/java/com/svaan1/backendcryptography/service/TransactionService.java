@@ -1,5 +1,6 @@
 package com.svaan1.backendcryptography.service;
 
+import com.svaan1.backendcryptography.converter.TransactionConverter;
 import com.svaan1.backendcryptography.dto.TransactionDTO;
 import com.svaan1.backendcryptography.dto.TransactionResponseDTO;
 import com.svaan1.backendcryptography.model.Transaction;
@@ -8,65 +9,43 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class TransactionService {
 
+    private final TransactionConverter transactionConverter;
+
     private final TransactionRepository transactionRepository;
 
     public List<TransactionResponseDTO> listTransactions() {
-        return transactionRepository.findAll().stream().map(this::convertEntityToResponse).toList();
+        return transactionRepository.findAll().stream().map(transactionConverter::toResponse).toList();
     }
 
     public TransactionResponseDTO getTransaction(Long transactionId) {
         Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
 
-        return convertEntityToResponse(transaction);
+        return transactionConverter.toResponse(transaction);
     }
 
     public void createTransaction(TransactionDTO transactionDTO) {
-        Transaction transaction = convertDTOtoEntity(transactionDTO);
+        Transaction transaction = transactionConverter.toEntity(transactionDTO);
 
         transactionRepository.save(transaction);
     }
 
     public void updateTransaction(Long transactionId, TransactionDTO transactionDTO) {
-        Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
 
-        if (optionalTransaction.isPresent()) {
-            Transaction transaction = optionalTransaction.get();
+        transaction.setUserDocument(transactionDTO.getUserDocument());
+        transaction.setCreditCardToken(transactionDTO.getCreditCardToken());
+        transaction.setValue(transactionDTO.getValue());
 
-            transaction.setUserDocument(transactionDTO.getUserDocument());
-            transaction.setCreditCardToken(transactionDTO.getCreditCardToken());
-            transaction.setValue(transactionDTO.getValue());
-
-            transactionRepository.save(transaction);
-        } else {
-            createTransaction(transactionDTO);
-        }
+        transactionRepository.save(transaction);
     }
 
     public void deleteTransaction(Long transactionId) {
         transactionRepository.deleteById(transactionId);
-    }
-
-    public Transaction convertDTOtoEntity(TransactionDTO transactionDTO) {
-        return Transaction.builder()
-                .userDocument(transactionDTO.getUserDocument())
-                .creditCardToken(transactionDTO.getCreditCardToken())
-                .value(transactionDTO.getValue())
-                .build();
-    }
-
-    public TransactionResponseDTO convertEntityToResponse(Transaction transaction) {
-        return TransactionResponseDTO.builder()
-                .id(transaction.getId())
-                .userDocument(transaction.getUserDocument())
-                .creditCardToken(transaction.getCreditCardToken())
-                .value(transaction.getValue())
-                .build();
     }
 
 }
