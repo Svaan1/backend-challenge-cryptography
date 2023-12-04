@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionResponseDTO {
+public class TransactionResponse {
     private Long id;
     private String userDocument;
     private String creditCardToken;
