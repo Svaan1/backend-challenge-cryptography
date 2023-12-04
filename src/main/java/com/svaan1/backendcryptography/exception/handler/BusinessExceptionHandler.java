@@ -10,7 +10,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.Instant;
 import java.util.List;
 
 @RestControllerAdvice
@@ -30,7 +29,7 @@ public class BusinessExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorMessage> handleHttpMessageNotReadable(HttpMessageNotReadableException exception) {
+    public ResponseEntity<ErrorMessage> handleHttpMessageNotReadable() {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         String detail = "Missing request body";
 
@@ -42,7 +41,7 @@ public class BusinessExceptionHandler {
     // Custom Exceptions
 
     @ExceptionHandler(TransactionNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleProductNotFound(TransactionNotFoundException exception) {
+    public ResponseEntity<ErrorMessage> handleProductNotFound() {
         HttpStatus status = HttpStatus.NOT_FOUND;
         String detail = "Resource not found";
 
