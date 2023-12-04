@@ -8,7 +8,9 @@ import com.svaan1.backendcryptography.model.Transaction;
 import com.svaan1.backendcryptography.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -29,13 +31,15 @@ public class TransactionService {
         return transactionConverter.toResponse(transaction);
     }
 
-    public void createTransaction(TransactionDTO transactionDTO) {
+    public TransactionResponse createTransaction(TransactionDTO transactionDTO) {
         Transaction transaction = transactionConverter.toEntity(transactionDTO);
 
         transactionRepository.save(transaction);
+
+        return transactionConverter.toResponse(transaction);
     }
 
-    public void updateTransaction(Long transactionId, TransactionDTO transactionDTO) {
+    public TransactionResponse updateTransaction(Long transactionId, TransactionDTO transactionDTO) {
         Transaction transaction = transactionRepository.findById(transactionId).orElseThrow(TransactionNotFoundException::new);
 
         transaction.setUserDocument(transactionDTO.getUserDocument());
@@ -43,10 +47,10 @@ public class TransactionService {
         transaction.setValue(transactionDTO.getValue());
 
         transactionRepository.save(transaction);
+
+        return transactionConverter.toResponse(transaction);
     }
 
-    public void deleteTransaction(Long transactionId) {
-        transactionRepository.deleteById(transactionId);
-    }
+    public void deleteTransaction(Long transactionId) { transactionRepository.deleteById(transactionId); }
 
 }

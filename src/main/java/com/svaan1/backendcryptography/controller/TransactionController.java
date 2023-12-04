@@ -4,9 +4,13 @@ import com.svaan1.backendcryptography.dto.TransactionDTO;
 import com.svaan1.backendcryptography.dto.TransactionResponse;
 import com.svaan1.backendcryptography.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -17,28 +21,48 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @GetMapping
-    public List<TransactionResponse> listTransactions() {
-        return transactionService.listTransactions();
+    public ResponseEntity<List<TransactionResponse>> listTransactions() {
+        List<TransactionResponse> transactionResponseList = transactionService.listTransactions();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(transactionResponseList);
     }
 
     @GetMapping(value = "/{transactionId}")
-    public TransactionResponse getTransaction(@PathVariable Long transactionId) {
-        return transactionService.getTransaction(transactionId);
+    public ResponseEntity<TransactionResponse> getTransaction(@PathVariable Long transactionId) {
+        TransactionResponse transactionResponse = transactionService.getTransaction(transactionId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(transactionResponse);
     }
 
     @PostMapping
-    public void createTransaction(@RequestBody @Validated TransactionDTO transactionDTO) {
-        transactionService.createTransaction(transactionDTO);
+    public ResponseEntity<TransactionResponse> createTransaction(@RequestBody @Validated TransactionDTO transactionDTO) {
+        TransactionResponse transactionResponse = transactionService.createTransaction(transactionDTO);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(transactionResponse);
     }
 
     @PutMapping(value = "/{transactionId}")
-    public void updateTransaction(@PathVariable Long transactionId, @RequestBody @Validated TransactionDTO transactionDTO) {
-        transactionService.updateTransaction(transactionId, transactionDTO);
+    public ResponseEntity<TransactionResponse> updateTransaction(@PathVariable Long transactionId, @RequestBody @Validated TransactionDTO transactionDTO) {
+        TransactionResponse transactionResponse = transactionService.updateTransaction(transactionId, transactionDTO);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(transactionResponse);
     }
 
     @DeleteMapping(value = "/{transactionId}")
-    public void deleteTransaction(@PathVariable Long transactionId) {
+    public ResponseEntity<Void> deleteTransaction(@PathVariable Long transactionId) {
         transactionService.deleteTransaction(transactionId);
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 
 }
