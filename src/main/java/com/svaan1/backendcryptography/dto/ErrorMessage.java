@@ -1,6 +1,5 @@
 package com.svaan1.backendcryptography.dto;
 
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
