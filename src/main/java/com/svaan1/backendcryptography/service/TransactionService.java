@@ -2,7 +2,8 @@ package com.svaan1.backendcryptography.service;
 
 import com.svaan1.backendcryptography.converter.TransactionConverter;
 import com.svaan1.backendcryptography.dto.TransactionDTO;
-import com.svaan1.backendcryptography.dto.TransactionResponseDTO;
+import com.svaan1.backendcryptography.dto.TransactionResponse;
+import com.svaan1.backendcryptography.exception.TransactionNotFoundException;
 import com.svaan1.backendcryptography.model.Transaction;
 import com.svaan1.backendcryptography.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,12 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
 
-    public List<TransactionResponseDTO> listTransactions() {
+    public List<TransactionResponse> listTransactions() {
         return transactionRepository.findAll().stream().map(transactionConverter::toResponse).toList();
     }
 
-    public TransactionResponseDTO getTransaction(Long transactionId) {
-        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
+    public TransactionResponse getTransaction(Long transactionId) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow(TransactionNotFoundException::new);
 
         return transactionConverter.toResponse(transaction);
     }
@@ -35,7 +36,7 @@ public class TransactionService {
     }
 
     public void updateTransaction(Long transactionId, TransactionDTO transactionDTO) {
-        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow(TransactionNotFoundException::new);
 
         transaction.setUserDocument(transactionDTO.getUserDocument());
         transaction.setCreditCardToken(transactionDTO.getCreditCardToken());
