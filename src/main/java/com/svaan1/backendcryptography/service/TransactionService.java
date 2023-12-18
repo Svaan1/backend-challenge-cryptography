@@ -8,9 +8,7 @@ import com.svaan1.backendcryptography.model.Transaction;
 import com.svaan1.backendcryptography.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @Service
