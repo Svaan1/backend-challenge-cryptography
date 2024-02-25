@@ -7,6 +7,9 @@ import com.svaan1.backendcryptography.exception.TransactionNotFoundException;
 import com.svaan1.backendcryptography.model.Transaction;
 import com.svaan1.backendcryptography.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +22,8 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
 
-    public List<TransactionResponse> listTransactions() {
-        return transactionRepository.findAll().stream().map(transactionConverter::toResponse).toList();
+    public Page<TransactionResponse> listTransactions(Pageable pageable) {
+        return transactionRepository.findAll(pageable).map(transactionConverter::toResponse);
     }
 
     public TransactionResponse getTransaction(Long transactionId) {

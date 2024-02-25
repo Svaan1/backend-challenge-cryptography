@@ -2,8 +2,11 @@ package com.svaan1.backendcryptography.controller;
 
 import com.svaan1.backendcryptography.dto.TransactionDTO;
 import com.svaan1.backendcryptography.dto.TransactionResponse;
+import com.svaan1.backendcryptography.model.Transaction;
 import com.svaan1.backendcryptography.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,8 +24,8 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @GetMapping
-    public ResponseEntity<List<TransactionResponse>> listTransactions() {
-        List<TransactionResponse> transactionResponseList = transactionService.listTransactions();
+    public ResponseEntity<Page<TransactionResponse>> listTransactions(Pageable pageable) {
+        Page<TransactionResponse> transactionResponseList = transactionService.listTransactions(pageable);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
