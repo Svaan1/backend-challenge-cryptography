@@ -3,7 +3,6 @@ package com.svaan1.backendcryptography.controller;
 import com.svaan1.backendcryptography.dto.TransactionDTO;
 import com.svaan1.backendcryptography.dto.TransactionResponse;
 import com.svaan1.backendcryptography.service.TransactionService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/transactions")
-@RequiredArgsConstructor
 public class TransactionController {
 
     private final TransactionService transactionService;
+
+    TransactionController (TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     @GetMapping
     public ResponseEntity<Page<TransactionResponse>> listTransactions(Pageable pageable) {

@@ -4,12 +4,10 @@ import com.svaan1.backendcryptography.dto.TransactionDTO;
 import com.svaan1.backendcryptography.dto.TransactionResponse;
 import com.svaan1.backendcryptography.model.Transaction;
 import com.svaan1.backendcryptography.security.StringEncoder;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class TransactionConverter {
 
-    @Autowired
-    private StringEncoder stringEncoder;
+    private final StringEncoder stringEncoder = new StringEncoder();
 
     public TransactionResponse toResponse(Transaction transaction) {
         return TransactionResponse.builder()
